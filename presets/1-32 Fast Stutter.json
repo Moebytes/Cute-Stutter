@@ -1,0 +1,14 @@
+{
+  "plugin": "Cute Stutter",
+  "version": "1.0.0",
+  "name": "1-32 Fast Stutter",
+  "author": "Moebytes",
+  "modified": "2026-06-30T23:57:55.482-04:00",
+  "presetFormat": 1,
+  "parameters": {
+    "rate": "1/32",
+    "hold": "1/2",
+    "length": "65%",
+    "reverse": "Off"
+  }
+}

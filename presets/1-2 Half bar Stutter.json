@@ -1,0 +1,14 @@
+{
+  "plugin": "Cute Stutter",
+  "version": "1.0.0",
+  "name": "1-2 Half bar Stutter",
+  "author": "Moebytes",
+  "modified": "2026-06-30T23:51:52.955-04:00",
+  "presetFormat": 1,
+  "parameters": {
+    "rate": "1/2",
+    "hold": "1/2",
+    "length": "70%",
+    "reverse": "Off"
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "rate": {"id": "rate", "version": 1},
+    "hold": {"id": "hold", "version": 1},
+    "length": {"id": "length", "version": 1},
+    "reverse": {"id": "reverse", "version": 1}
+}

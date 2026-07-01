@@ -1,0 +1,14 @@
+{
+  "plugin": "Cute Stutter",
+  "version": "1.0.0",
+  "name": "1-4 Quarter bar Stutter",
+  "author": "Moebytes",
+  "modified": "2026-06-30T23:52:35.726-04:00",
+  "presetFormat": 1,
+  "parameters": {
+    "rate": "1/4",
+    "hold": "1/4",
+    "length": "70%",
+    "reverse": "Off"
+  }
+}

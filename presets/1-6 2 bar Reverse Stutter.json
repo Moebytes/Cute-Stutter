@@ -1,0 +1,14 @@
+{
+  "plugin": "Cute Stutter",
+  "version": "1.0.0",
+  "name": "1-6 2 bar Reverse Stutter",
+  "author": "Moebytes",
+  "modified": "2026-06-30T23:55:14.483-04:00",
+  "presetFormat": 1,
+  "parameters": {
+    "rate": "1/6",
+    "hold": "2/1",
+    "length": "60%",
+    "reverse": "On"
+  }
+}
