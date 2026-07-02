@@ -19,7 +19,7 @@ template <typename T>
 static auto resetParameter(const AudioProcessorValueTreeState& tree, 
     const AudioParameterBool* param, T*& dest) -> void {
     auto* paramObj = tree.getParameter(param->getParameterID());
-    if (paramObj) *dest = paramObj->getDefaultValue();
+    if (paramObj) *dest = static_cast<bool>(paramObj->getDefaultValue());
 }
 
 template <typename T>
