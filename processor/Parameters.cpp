@@ -116,7 +116,24 @@ auto Parameters::reset() noexcept -> void {
         std::pair{lengthParam, &length}
     };
 
+    auto paramChoices = std::vector{
+        std::pair{rateParam, &rate},
+        std::pair{holdParam, &hold}
+    };
+
+    auto paramBools = std::vector{
+        std::pair{reverseParam, &reverse}
+    };
+
     for (auto& [param, value] : paramFloats) {
+        resetParameter(tree, param, value);
+    }
+
+    for (auto& [param, value] : paramChoices) {
+        resetParameter(tree, param, value);
+    }
+
+    for (auto& [param, value] : paramBools) {
         resetParameter(tree, param, value);
     }
     
