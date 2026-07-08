@@ -12,6 +12,8 @@ public:
 
         this->buffer.setSize(2, bufferSize);
         this->buffer.clear();
+
+        this->crossfadeLength = jmax(16, static_cast<int>(sampleRate * 0.005));
         
         this->reset();
     }
@@ -86,6 +88,7 @@ public:
         if (this->rate == "Off") {
             outL = inL;
             outR = inR;
+            this->writePos = (this->writePos + 1) % this->bufferSize;
             return;
         }
 
@@ -101,20 +104,43 @@ public:
         if (this->captureGrid == -1 || (grid - this->captureGrid) >= this->holdGrids) {
             this->captureGrid = grid; 
             this->playPos = 0; 
-            this->sliceStart = writePos;
+            this->previousSliceStart = this->sliceStart;
+            this->sliceStart = this->writePos;
+            this->crossfadeSamples = this->crossfadeLength;
         }
 
         int pos = this->reverse ? (this->playLength - 1) - this->playPos : this->playPos;
         int readPos = (this->sliceStart + pos) % this->bufferSize;
+        int oldReadPos = (this->previousSliceStart + pos) % this->bufferSize;
 
-        if (this->playPos < this->playLength) {
-            outL = this->buffer.getSample(0, readPos);
-            outR = this->buffer.getSample(1, readPos);
-        } else {
-            outL = 0.0f;
-            outR = 0.0f;
+        float sampleL = this->buffer.getSample(0, readPos);
+        float sampleR = this->buffer.getSample(1, readPos);
+
+        if (this->crossfadeSamples > 0) {
+            float t = 1.0f - static_cast<float>(this->crossfadeSamples) 
+                / static_cast<float>(this->crossfadeLength);
+
+            float oldL = buffer.getSample(0, oldReadPos);
+            float oldR = buffer.getSample(1, oldReadPos);
+
+            sampleL = oldL + t * (sampleL - oldL);
+            sampleR = oldR + t * (sampleR - oldR);
+
+            this->crossfadeSamples--;
+        }
+
+        float gain = 1.0f;
+
+        if (this->playPos >= this->playLength) {
+            gain = 0.0f;
+        } else if (this->playLength - this->playPos < this->crossfadeLength) {
+            gain = static_cast<float>(this->playLength - this->playPos) 
+                / static_cast<float>(this->crossfadeLength);
         }
         
+        outL = sampleL * gain;
+        outR = sampleR * gain;
+
         this->writePos = (this->writePos + 1) % this->bufferSize;
         this->playPos++;
         if (this->playPos >= this->sliceLength) {
@@ -144,4 +170,8 @@ private:
     int captureGrid = -1;
     int lastGrid = -1;
     int holdGrids = 16;
+
+    int previousSliceStart = 0;
+    int crossfadeSamples = 0;
+    int crossfadeLength = 128;
 };
